@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EstaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'login');
+Route::view('/welcome', 'welcome')->name('index');
+
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
+Route::get('/dashboard', function () {
+    return view('index');
+})->name('dashboard');
+
+
+Route::get('/establecimiento', [EstaController::class, 'create'])->name('establecimiento');
+Route::post('/establecimiento', [EstaController::class, 'store'])->name('establecimiento.store');
+
